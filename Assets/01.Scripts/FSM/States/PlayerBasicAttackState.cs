@@ -14,7 +14,12 @@ public class PlayerBasicAttackState : PlayerGroundedState
 
         _owner.StopImmediately();
         _owner.CanMove = false;
-        _owner.Dash(_owner.AnimatorCompo.transform.forward, _dashDelay, _dashTime, _dashSpeed);
+
+        if (_attackController.CurrentTarget != null)
+            _attackController.AttackTarget();
+
+        if (!_attackController.IsTargetInStopRange())
+            _owner.Dash(_owner.AnimatorCompo.transform.forward, _dashDelay, _dashTime, _dashSpeed, DashTypeEnum.AttackDash);
 
         _owner.AnimatorCompo.SetAttackCount(_owner.CurrentComboCounter);
         _owner.AnimatorCompo.SetAttackAnimation(true);

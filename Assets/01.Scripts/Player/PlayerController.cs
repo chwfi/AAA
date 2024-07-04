@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public InputReader InputReader => _inputReader;
     public CharacterController CharacterControllerCompo { get; private set; }
     public PlayerAnimator AnimatorCompo { get; private set; }
+    public PlayerAttackController AttackControllerCompo { get; private set; }
     public StateMachine PlayerStateMachine { get; private set; }
 
     [Header("Player")]
@@ -54,22 +54,18 @@ public class PlayerController : MonoBehaviour
     {
         PlayerStateMachine = new StateMachine();
 
-        if (_mainCamera == null)
-        {
-            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        }
-
         Transform visual = transform.Find("Visual").transform;
         Transform states = transform.Find("States").transform;
 
         CharacterControllerCompo = GetComponent<CharacterController>();
+        AttackControllerCompo = GetComponent<PlayerAttackController>();
         AnimatorCompo = visual.GetComponent<PlayerAnimator>();
 
         var stateComponents = states.GetComponents<State>();
 
         foreach (var stateComponent in stateComponents)
         {
-            stateComponent.Initialize(PlayerStateMachine, this);
+            stateComponent.Initialize(PlayerStateMachine, this, AttackControllerCompo);
             PlayerStateMachine.AddState(stateComponent.StateType, stateComponent);
         }
     }
@@ -86,6 +82,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        _mainCamera = GameManager.Instance.MainCam;
+
         PlayerStateMachine.Init(StateTypeEnum.Idle);
     }
 
@@ -150,15 +148,15 @@ public class PlayerController : MonoBehaviour
                          new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
     }
 
-    public void Dash(Vector3 dir, float delay, float time, float speed)
+    public void Dash(Vector3 dir, float delay, float time, float speed, DashTypeEnum dashType, bool ease = false)
     {
         if (_dashCoroutine != null)
             StopCoroutine(_dashCoroutine);
 
-        _dashCoroutine = StartCoroutine(DashCoroutine(dir, delay, time, speed));
+        _dashCoroutine = StartCoroutine(DashCoroutine(dir, delay, time, speed, dashType, ease));
     }
 
-    private IEnumerator DashCoroutine(Vector3 dir, float delay, float time, float speed)
+    private IEnumerator DashCoroutine(Vector3 dir, float delay, float time, float speed, DashTypeEnum dashType, bool ease = false)
     {
         yield return new WaitForSeconds(delay);
 
@@ -166,11 +164,29 @@ public class PlayerController : MonoBehaviour
 
         while (Time.time < startTime + time)
         {
+            if (AttackControllerCompo.IsTargetInStopRange() && dashType == DashTypeEnum.AttackDash)
+                StopCoroutine(_dashCoroutine);
+
+            float elapsed = Time.time - startTime;
+            float currentSpeed = ease ? speed * OutQuint(elapsed / time) : speed;
+
             CharacterControllerCompo.Move
-                (dir * (speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+                (dir * (currentSpeed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
             yield return null;
         }
+    }
+
+    public void Rotate(Vector3 dir)
+    {
+        var destRotation = Quaternion.LookRotation(dir);
+
+        AnimatorCompo.transform.rotation = destRotation;
+    }
+
+    private float OutQuint(float t)
+    {
+        return 1f - Mathf.Pow(1f - t, 5f);
     }
 
     public void StopImmediately()

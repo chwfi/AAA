@@ -14,6 +14,9 @@ public class PlayerAnimator : MonoBehaviour
     private readonly int _attackAnim = Animator.StringToHash("Attack");
     private readonly int _attackCount = Animator.StringToHash("Attack_Count");
     private readonly int _dodgeAnim = Animator.StringToHash("Dodge");
+    private readonly int _dodgeLeftAnim = Animator.StringToHash("Dodge_L");
+    private readonly int _dodgeRightAnim = Animator.StringToHash("Dodge_R");
+    private readonly int _dodgeBackAnim = Animator.StringToHash("Dodge_B");
     private readonly int _freeFallAnim = Animator.StringToHash("FreeFall");
 
     private float _animationBlend;
@@ -43,6 +46,11 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetBool(_groundedAnim, value);
     }
 
+    public void SetFreeFallAnimation(bool value)
+    {
+        _animator.SetBool(_freeFallAnim, value);
+    }
+
     public void SetAttackAnimation(bool value)
     {
         _animator.SetBool(_attackAnim, value);
@@ -58,14 +66,27 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetBool(_dodgeAnim, value);
     }
 
-    public void SetFreeFallAnimation(bool value)
+    public void SetDodgeLeftAnimation(bool value)
     {
-        _animator.SetBool(_freeFallAnim, value);
+        _animator.SetBool(_dodgeLeftAnim, value);
+    }
+
+    public void SetDodgeRightAnimation(bool value)
+    {
+        _animator.SetBool(_dodgeRightAnim, value);
+    }
+
+    public void SetDodgeBackAnimation(bool value)
+    {
+        _animator.SetBool(_dodgeBackAnim, value);
     }
 
     public void DodgeEndTrigger()
     {
         _animator.SetBool(_dodgeAnim, false);
+        _animator.SetBool(_dodgeLeftAnim, false);
+        _animator.SetBool(_dodgeRightAnim, false);
+        _animator.SetBool(_dodgeBackAnim, false);
         _player.PlayerStateMachine.ChangeState(StateTypeEnum.Idle);
     }
 

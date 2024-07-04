@@ -14,9 +14,30 @@ public class PlayerDodgeState : State
 
         _owner.StopImmediately();
 
-        _owner.Dash(_owner.AnimatorCompo.transform.forward, _dodgeDelay, _dodgeTime, _dodgeSpeed);
-
-        _owner.AnimatorCompo.SetDodgeAnimation(true);
+        if (_owner.InputReader.MoveInput.x < 0)
+        {
+            _owner.Dash(-_owner.AnimatorCompo.transform.right, 
+                _dodgeDelay, _dodgeTime, _dodgeSpeed + 0.1f, DashTypeEnum.DodgeDash, true);
+            _owner.AnimatorCompo.SetDodgeLeftAnimation(true);
+        }
+        else if (_owner.InputReader.MoveInput.x > 0)
+        {
+            _owner.Dash(_owner.AnimatorCompo.transform.right, 
+                _dodgeDelay, _dodgeTime, _dodgeSpeed + 0.1f, DashTypeEnum.DodgeDash, true);
+            _owner.AnimatorCompo.SetDodgeRightAnimation(true);
+        }
+        else if (_owner.InputReader.MoveInput.y == -1)
+        {
+            _owner.Dash(-_owner.AnimatorCompo.transform.forward,
+                _dodgeDelay, _dodgeTime, _dodgeSpeed - 0.1f, DashTypeEnum.DodgeDash, true);
+            _owner.AnimatorCompo.SetDodgeBackAnimation(true);
+        }
+        else
+        {
+            _owner.Dash(_owner.AnimatorCompo.transform.forward,
+                _dodgeDelay, _dodgeTime, _dodgeSpeed, DashTypeEnum.DodgeDash, true);
+            _owner.AnimatorCompo.SetDodgeAnimation(true);
+        }
     }
 
     public override void UpdateState()

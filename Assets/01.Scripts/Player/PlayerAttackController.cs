@@ -1,0 +1,69 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerAttackController : MonoBehaviour
+{
+    public TestEnemy CurrentTarget;
+
+    [SerializeField] private float _targetRange;
+    [SerializeField] private float _stopRange;
+    [SerializeField] private LayerMask _enemyLayer;
+
+    private Collider[] _hitColliders = new Collider[10];
+
+    private void Update()
+    {
+        SetTarget();
+    }
+
+    public void SetTarget()
+    {
+        int numColliders = Physics.OverlapSphereNonAlloc(transform.position, 15f, _hitColliders, _enemyLayer);
+        TestEnemy closestEnemy = null;
+        float closestDistance = _targetRange;
+
+        for (int i = 0; i < numColliders; i++)
+        {
+            TestEnemy enemy = _hitColliders[i].GetComponent<TestEnemy>();
+            if (enemy != null)
+            {
+                float distance = Vector3.Distance(transform.position, _hitColliders[i].transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = enemy;
+                }
+            }
+        }
+
+        if (closestEnemy != null)
+        {
+            float minDistance = Vector3.Distance(transform.position, closestEnemy.transform.position);
+
+            if (minDistance > _stopRange)
+            {
+                CurrentTarget = closestEnemy;
+            }
+        }
+        else
+        {
+            CurrentTarget = null;
+        }
+    }
+
+    public bool IsTargetInStopRange()
+    {
+        if (CurrentTarget == null) return false;
+
+        if (Vector3.Distance(transform.position, CurrentTarget.transform.position) < _stopRange) return true;
+        else return false;
+    }
+
+    public void AttackTarget()
+    {
+        var destRotation = Quaternion.LookRotation(CurrentTarget.transform.position - transform.position);
+
+        transform.rotation = destRotation;
+    }
+}
