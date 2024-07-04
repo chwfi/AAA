@@ -19,19 +19,17 @@ public class PlayerAttackController : MonoBehaviour
     {
         int numColliders = Physics.OverlapSphereNonAlloc(transform.position, 15f, _hitColliders, _enemyLayer);
         TestEnemy closestEnemy = null;
-        float closestDistance = _targetRange;
 
         for (int i = 0; i < numColliders; i++)
         {
-            TestEnemy enemy = _hitColliders[i].GetComponent<TestEnemy>();
-            if (enemy != null)
+            Collider enemyColl = _hitColliders[i];
+            if (enemyColl != null)
             {
-                float distance = Vector3.Distance(transform.position, 
-                                        _hitColliders[i].ClosestPoint(transform.position));
-                if (distance < closestDistance)
+                float distance = Vector3.Distance(transform.position,
+                                        enemyColl.ClosestPoint(transform.position));
+                if (distance < _targetRange)
                 {
-                    closestDistance = distance;
-                    closestEnemy = enemy;
+                    closestEnemy = enemyColl.GetComponent<TestEnemy>();
                 }
             }
         }
