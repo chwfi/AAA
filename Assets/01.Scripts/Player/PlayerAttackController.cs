@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttackController : MonoBehaviour
@@ -28,7 +26,8 @@ public class PlayerAttackController : MonoBehaviour
             TestEnemy enemy = _hitColliders[i].GetComponent<TestEnemy>();
             if (enemy != null)
             {
-                float distance = Vector3.Distance(transform.position, _hitColliders[i].transform.position);
+                float distance = Vector3.Distance(transform.position, 
+                                        _hitColliders[i].ClosestPoint(transform.position));
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
