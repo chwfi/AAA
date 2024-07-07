@@ -21,8 +21,8 @@ Material:
   m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses:
-  - DecalMeshForwardEmissive
   - DecalProjectorForwardEmissive
+  - DecalMeshForwardEmissive
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3

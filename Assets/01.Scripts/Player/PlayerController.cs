@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Entity
 {
     [SerializeField] private InputReader _inputReader;
     public InputReader InputReader => _inputReader;
+
     public CharacterController CharacterControllerCompo { get; private set; }
     public PlayerAnimator AnimatorCompo { get; private set; }
     public PlayerAttackController AttackControllerCompo { get; private set; }
@@ -50,8 +51,10 @@ public class PlayerController : MonoBehaviour
     public bool CanAttack = true;
     public bool CanMove = true;
       
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         PlayerStateMachine = new StateMachine();
 
         Transform visual = transform.Find("Visual").transform;

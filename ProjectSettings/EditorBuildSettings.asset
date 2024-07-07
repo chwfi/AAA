@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/OutdoorsScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
   - enabled: 1
-    path: Assets/Sci-Fi Base/Scenes/Scene_HDRP.unity
+    path: Assets/00.Scenes/Scene_Test.unity
     guid: e6bbc6abfd41ab04ca25d7a151ccb5c8
   m_configObjects: {}

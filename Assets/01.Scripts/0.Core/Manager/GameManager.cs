@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.HighDefinition;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -18,5 +20,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        //LightmappingHDRP.BakeProbe();
     }
 }

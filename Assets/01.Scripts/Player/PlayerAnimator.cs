@@ -61,6 +61,11 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetInteger(_attackCount, value);
     }
 
+    public void SetAttackTrigger()
+    {
+        _player.AttackControllerCompo.AttackTrigger();
+    }
+
     public void SetDodgeAnimation(bool value)
     {
         _animator.SetBool(_dodgeAnim, value);

@@ -3,12 +3,18 @@ using UnityEngine;
 public class PlayerAttackController : MonoBehaviour
 {
     public TestEnemy CurrentTarget;
+    public DamageCaster DamageCasterCompo { get; private set; }
 
     [SerializeField] private float _targetRange;
     [SerializeField] private float _stopRange;
     [SerializeField] private LayerMask _enemyLayer;
 
     private Collider[] _hitColliders = new Collider[10];
+
+    private void Awake()
+    {
+        DamageCasterCompo = GetComponent<DamageCaster>();
+    }
 
     private void Update()
     {
@@ -60,7 +66,11 @@ public class PlayerAttackController : MonoBehaviour
     public void AttackTarget()
     {
         var destRotation = Quaternion.LookRotation(CurrentTarget.transform.position - transform.position);
-
         transform.rotation = destRotation;
+    }
+
+    public void AttackTrigger()
+    {
+        DamageCasterCompo.CastDamage(_enemyLayer);
     }
 }

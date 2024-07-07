@@ -7,7 +7,6 @@ public abstract class State : MonoBehaviour
     protected StateMachine _stateMachine;
     protected PlayerController _owner;
     protected PlayerAttackController _attackController;
-    protected bool _triggerCalled = true;
 
     public virtual void Initialize(StateMachine stateMachine, PlayerController owner, PlayerAttackController attackController)
     {
