@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
 {
-    private ActionData _actionData;
+    private IHitFeedbackable _hitFeedback;
 
     public int maxHealth;
     public int currentHealth;
@@ -13,7 +13,8 @@ public class Health : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        _actionData = GetComponent<ActionData>();
+        Transform feedbackTrm = transform.Find("Feedback").transform;
+        _hitFeedback = feedbackTrm.GetComponent<Feedback>() as IHitFeedbackable;
 
         IsDead = false;
         currentHealth = maxHealth; //나중에 SO로 뺄 것
@@ -24,8 +25,7 @@ public class Health : MonoBehaviour, IDamageable
         if (IsDead) return;
 
         currentHealth -= damage;
-        _actionData.HitPoint = point;
-        _actionData.HitNormal = normal;
+        _hitFeedback?.ApplyFeedback(point);
 
         Debug.Log("Hit!");
     }
