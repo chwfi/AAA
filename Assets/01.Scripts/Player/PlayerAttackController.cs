@@ -63,7 +63,7 @@ public class PlayerAttackController : MonoBehaviour
         else return false;
     }
 
-    public void AttackTarget()
+    public void RotateToTarget()
     {
         var destRotation = Quaternion.LookRotation(CurrentTarget.transform.position - transform.position);
         transform.rotation = destRotation;

@@ -8,6 +8,9 @@ public class GameManager : MonoSingleton<GameManager>
 {
     public GameObject MainCam;
 
+    [SerializeField]
+    private PoolingListSO _poolingListSO;
+
     private void Awake()
     {
         if (MainCam == null)
@@ -21,6 +24,13 @@ public class GameManager : MonoSingleton<GameManager>
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        //LightmappingHDRP.BakeProbe();
+        MakePool();
+    }
+
+    private void MakePool()
+    {
+        PoolManager.Instance = new PoolManager(transform);
+
+        _poolingListSO.EffectList.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
     }
 }

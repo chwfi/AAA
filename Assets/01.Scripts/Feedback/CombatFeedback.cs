@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class CombatFeedback : Feedback, IHitFeedbackable
 {
-    [SerializeField] private ParticleSystem _hitEffect;
-
-    public void ApplyFeedback(Vector3 hitPoint)
+    public void ApplyCameraShake()
     {
-        _hitEffect.transform.position = hitPoint;
-        _hitEffect.Play();
+
+    }
+
+    public void ApplyFeedback(Vector3 hitPoint, HitTypeEnum hitType)
+    {
+        EffectController effect = PoolManager.Instance.Pop($"{hitType}HitEffect") as EffectController;
+        effect.transform.position = hitPoint;
+        effect.StartPlay();
     }
 }

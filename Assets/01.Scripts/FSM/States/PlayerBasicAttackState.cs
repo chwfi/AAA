@@ -7,8 +7,6 @@ public class PlayerBasicAttackState : PlayerGroundedState
     [SerializeField] private float _dashSpeed;
     [SerializeField] private float _targetDashTime;
     [SerializeField] private float _targetDashSpeed;
-    [SerializeField] private float _attackTimer;
-    [SerializeField] private float _attackDelay = 0.75f;
 
     public override void EnterState()
     {
@@ -19,7 +17,7 @@ public class PlayerBasicAttackState : PlayerGroundedState
 
         if (_attackController.CurrentTarget != null) //타겟이 있다면 더 빠른 대쉬
         {
-            _attackController.AttackTarget();
+            _attackController.RotateToTarget();
             _owner.Dash(_owner.AnimatorCompo.transform.forward, 
                 _dashDelay, _targetDashTime, _targetDashSpeed, DashTypeEnum.AttackDash);
         }

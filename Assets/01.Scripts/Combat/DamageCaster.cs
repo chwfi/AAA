@@ -18,14 +18,15 @@ public class DamageCaster : MonoBehaviour
         {
             int damage = 10;
 
-            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal);
+            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, HitTypeEnum.Normal);
         }
     }
 
+    #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(_castTrm.position, _castTrm.position + _castTrm.forward * _castDistance);
     }
+    #endif
 }
-

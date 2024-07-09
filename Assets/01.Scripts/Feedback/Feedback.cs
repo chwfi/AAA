@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Feedback : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    protected Entity _owner;
 
-    // Update is called once per frame
-    void Update()
+    public void SetOwner(Entity owner)
     {
-        
+        _owner = owner;
     }
 }
