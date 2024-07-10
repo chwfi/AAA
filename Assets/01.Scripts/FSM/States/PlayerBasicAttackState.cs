@@ -14,6 +14,7 @@ public class PlayerBasicAttackState : PlayerGroundedState
 
         _owner.StopImmediately();
         _owner.CanMove = false;
+        _owner.AttackControllerCompo.AttackFeedback.ApplyAttackEffect();
 
         if (_attackController.CurrentTarget != null) //타겟이 있다면 더 빠른 대쉬
         {

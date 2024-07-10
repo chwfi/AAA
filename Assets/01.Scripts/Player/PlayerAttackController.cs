@@ -4,6 +4,7 @@ public class PlayerAttackController : MonoBehaviour
 {
     public TestEnemy CurrentTarget;
     public DamageCaster DamageCasterCompo { get; private set; }
+    public AttackFeedback AttackFeedback { get; private set; }
 
     [SerializeField] private float _targetRange;
     [SerializeField] private float _stopRange;
@@ -14,6 +15,10 @@ public class PlayerAttackController : MonoBehaviour
     private void Awake()
     {
         DamageCasterCompo = GetComponent<DamageCaster>();
+
+        Transform feedbackTrm = transform.Find("Feedback").transform;
+        AttackFeedback = feedbackTrm.GetComponent<AttackFeedback>();
+        AttackFeedback.SetOwner(transform.GetComponent<Entity>());
     }
 
     private void Update()
