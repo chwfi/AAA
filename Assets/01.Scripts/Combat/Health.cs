@@ -26,7 +26,8 @@ public class Health : MonoBehaviour, IDamageable
         if (IsDead) return;
 
         currentHealth -= damage;
-        _hitFeedback?.ApplyFeedback(point, hitType);
+        _hitFeedback.ApplyFeedback(point, hitType);
+        TimeManager.Instance.StopTime(0.5f);
 
         Debug.Log("Hit!");
     }

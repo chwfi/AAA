@@ -5,6 +5,7 @@ using UnityEngine;
 public class AttackFeedback : Feedback, IAttackFeedbackable
 {
     [SerializeField] private ParticleSystem[] _swordTrail;
+    [SerializeField] private AudioSource _audio;
 
     public void ApplyAttackEffect()
     {
@@ -12,5 +13,10 @@ public class AttackFeedback : Feedback, IAttackFeedbackable
         {
             effect.Play();
         }
+    }
+
+    public void ApplyAttackSound()
+    {
+        _audio.Play();
     }
 }

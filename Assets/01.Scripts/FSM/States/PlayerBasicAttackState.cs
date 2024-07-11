@@ -12,28 +12,29 @@ public class PlayerBasicAttackState : PlayerGroundedState
     {
         base.EnterState();
 
-        _owner.StopImmediately();
-        _owner.CanMove = false;
-        _owner.AttackControllerCompo.AttackFeedback.ApplyAttackEffect();
+        Player.MoveCompo.StopImmediately();
+        Player.MoveCompo.CanMove = false;
+        Player.AttackCompo.AttackFeedback.ApplyAttackEffect();
+        Player.AttackCompo.AttackFeedback.ApplyAttackSound();
 
-        if (_attackController.CurrentTarget != null) //타겟이 있다면 더 빠른 대쉬
+        if (_attack.CurrentTarget != null) //타겟이 있다면 더 빠른 대쉬
         {
-            _attackController.RotateToTarget();
-            _owner.Dash(_owner.AnimatorCompo.transform.forward, 
+            PlayerAttack.RotateToTarget();
+            Player.MoveCompo.Dash(Player.AnimatorCompo.transform.forward, 
                 _dashDelay, _targetDashTime, _targetDashSpeed, DashTypeEnum.AttackDash);
         }
         else
         {
-            _owner.Dash(_owner.AnimatorCompo.transform.forward, 
+            Player.MoveCompo.Dash(Player.AnimatorCompo.transform.forward, 
                 _dashDelay, _dashTime, _dashSpeed, DashTypeEnum.AttackDash);
         }
 
-        _owner.AnimatorCompo.SetAttackCount(_owner.CurrentComboCounter);
-        _owner.AnimatorCompo.SetAttackAnimation(true);
-        _owner.CurrentComboCounter++;
-        _owner.CanAttack = false;
+        Player.AnimatorCompo.SetAttackCount(Player.AttackCompo.CurrentComboCounter);
+        Player.AnimatorCompo.SetAttackAnimation(true);
+        Player.AttackCompo.CurrentComboCounter++;
+        Player.AttackCompo.CanAttack = false;
 
-        if (_owner.CurrentComboCounter == 2)
+        if (Player.AttackCompo.CurrentComboCounter == 2)
             _dashDelay = 0.25f;
         else
             _dashDelay = 0.15f;

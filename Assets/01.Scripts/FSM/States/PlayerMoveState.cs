@@ -11,9 +11,10 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.UpdateState();
 
-        _owner.MoveSpeed = _owner.InputReader.Sprint ? _owner.SprintSpeed : 2;
+        Player.MoveCompo.MoveSpeed =
+            Player.InputReader.Sprint ? Player.MoveCompo.SprintSpeed : 2;
 
-        if (_owner.InputReader.MoveInput.magnitude <= 0)
+        if (Player.InputReader.MoveInput.magnitude <= 0)
         {
             _stateMachine.ChangeState(StateTypeEnum.Idle);
         }

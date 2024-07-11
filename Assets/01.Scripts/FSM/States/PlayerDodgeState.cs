@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDodgeState : State
+public class PlayerDodgeState : PlayerBaseState
 {
     [SerializeField] private float _dodgeDelay;
     [SerializeField] private float _dodgeTime;
@@ -12,31 +12,31 @@ public class PlayerDodgeState : State
     {
         base.EnterState();
 
-        _owner.StopImmediately();
+        Player.MoveCompo.StopImmediately();
 
-        if (_owner.InputReader.MoveInput.x < 0)
+        if (Player.InputReader.MoveInput.x < 0)
         {
-            _owner.Dash(-_owner.AnimatorCompo.transform.right, 
+            Player.MoveCompo.Dash(-Player.AnimatorCompo.transform.right, 
                 _dodgeDelay, _dodgeTime, _dodgeSpeed + 0.1f, DashTypeEnum.DodgeDash, true);
-            _owner.AnimatorCompo.SetDodgeLeftAnimation(true);
+            Player.AnimatorCompo.SetDodgeLeftAnimation(true);
         }
-        else if (_owner.InputReader.MoveInput.x > 0)
+        else if (Player.InputReader.MoveInput.x > 0)
         {
-            _owner.Dash(_owner.AnimatorCompo.transform.right, 
+            Player.MoveCompo.Dash(Player.AnimatorCompo.transform.right, 
                 _dodgeDelay, _dodgeTime, _dodgeSpeed + 0.1f, DashTypeEnum.DodgeDash, true);
-            _owner.AnimatorCompo.SetDodgeRightAnimation(true);
+            Player.AnimatorCompo.SetDodgeRightAnimation(true);
         }
-        else if (_owner.InputReader.MoveInput.y == -1)
+        else if (Player.InputReader.MoveInput.y == -1)
         {
-            _owner.Dash(-_owner.AnimatorCompo.transform.forward,
+            Player.MoveCompo.Dash(-Player.AnimatorCompo.transform.forward,
                 _dodgeDelay, _dodgeTime, _dodgeSpeed - 0.1f, DashTypeEnum.DodgeDash, true);
-            _owner.AnimatorCompo.SetDodgeBackAnimation(true);
+            Player.AnimatorCompo.SetDodgeBackAnimation(true);
         }
         else
         {
-            _owner.Dash(_owner.AnimatorCompo.transform.forward,
+            Player.MoveCompo.Dash(Player.AnimatorCompo.transform.forward,
                 _dodgeDelay, _dodgeTime, _dodgeSpeed, DashTypeEnum.DodgeDash, true);
-            _owner.AnimatorCompo.SetDodgeAnimation(true);
+            Player.AnimatorCompo.SetDodgeAnimation(true);
         }
     }
 

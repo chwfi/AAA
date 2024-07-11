@@ -6,15 +6,15 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.EnterState();
 
-        _owner.MoveSpeed = 0;
-        _owner.InitAttackCombo();
+        Player.MoveCompo.MoveSpeed = 0;
+        Player.AttackCompo.InitAttackCombo();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_owner.InputReader.MoveInput.magnitude > 0)
+        if (Player.InputReader.MoveInput.magnitude > 0)
         {
             _stateMachine.ChangeState(StateTypeEnum.Move);
         }

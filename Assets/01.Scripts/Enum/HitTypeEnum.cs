@@ -5,7 +5,8 @@ using UnityEngine;
 public enum HitTypeEnum
 {
     None,
-    Normal
+    Normal,
+    Spark,
 }
 
 public enum AttackTypeEnum

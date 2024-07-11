@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour
+public class PlayerAnimator : MonoBehaviour, IPlayerable
 {
     private Animator _animator;
-    private PlayerController _player;
 
     private readonly int _speedAnim = Animator.StringToHash("Speed");
     private readonly int _motionSpeedAnim = Animator.StringToHash("MotionSpeed");
@@ -21,10 +20,16 @@ public class PlayerAnimator : MonoBehaviour
 
     private float _animationBlend;
 
+    public PlayerController Player { get; set; }
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _player = transform.parent.GetComponent<PlayerController>();
+    }
+
+    public void SetPlayer(PlayerController player)
+    {
+        Player = player;
     }
 
     public void SetMoveAnimation(float targetSpeed, float SpeedChangeRate, float inputMagnitude)
@@ -63,7 +68,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void SetAttackTrigger()
     {
-        _player.AttackControllerCompo.AttackTrigger();
+        Player.AttackCompo.AttackTrigger();
     }
 
     public void SetDodgeAnimation(bool value)
@@ -92,17 +97,17 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetBool(_dodgeLeftAnim, false);
         _animator.SetBool(_dodgeRightAnim, false);
         _animator.SetBool(_dodgeBackAnim, false);
-        _player.PlayerStateMachine.ChangeState(StateTypeEnum.Idle);
+        Player.PlayerStateMachine.ChangeState(StateTypeEnum.Idle);
     }
 
     public void AttackEndTrigger()
     {
         _animator.SetBool(_attackAnim, false);
-        _player.PlayerStateMachine.ChangeState(StateTypeEnum.Idle);
+        Player.PlayerStateMachine.ChangeState(StateTypeEnum.Idle);
     }
 
     public void AttackComboTrigger()
     {
-        _player.CanAttack = true;
+        Player.AttackCompo.CanAttack = true;
     }
 }

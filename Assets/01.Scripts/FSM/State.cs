@@ -5,14 +5,14 @@ public abstract class State : MonoBehaviour
     public StateTypeEnum StateType;
 
     protected StateMachine _stateMachine;
-    protected PlayerController _owner;
-    protected PlayerAttackController _attackController;
+    protected Entity _owner;
+    protected AttackableEntity _attack;
 
-    public virtual void Initialize(StateMachine stateMachine, PlayerController owner, PlayerAttackController attackController)
+    public virtual void Initialize(StateMachine stateMachine, Entity owner, AttackableEntity attackController)
     {
         _stateMachine = stateMachine;
         _owner = owner;
-        _attackController = attackController;
+        _attack = attackController;
     }
 
     public virtual void EnterState() { }

@@ -14,19 +14,11 @@ public class DamageCaster : MonoBehaviour
         bool raycastSuccess = Physics.Raycast(_castTrm.position, _castTrm.forward, out RaycastHit raycastHit, _castDistance, layer);
 
         if (raycastSuccess
-            && raycastHit.collider.TryGetComponent(out Health health))
+            && raycastHit.collider.transform.parent.TryGetComponent(out Health health))
         {
             int damage = 10;
 
-            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, HitTypeEnum.Normal);
+            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, HitTypeEnum.Spark);
         }
     }
-
-    #if UNITY_EDITOR
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(_castTrm.position, _castTrm.position + _castTrm.forward * _castDistance);
-    }
-    #endif
 }
