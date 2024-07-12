@@ -12,6 +12,7 @@ public class AttackableEntity : MonoBehaviour
     public DamageCaster DamageCasterCompo { get; private set; }
     protected Entity _owner;
     private readonly Collider[] _hitColliders = new Collider[10];
+    protected Collider enemyColl;
 
     protected virtual void Awake()
     {
@@ -20,24 +21,24 @@ public class AttackableEntity : MonoBehaviour
 
     protected virtual void Update()
     {
-        SetTarget();
+        Targeting();
     }
 
-    public void SetTarget()
+    public void Targeting()
     {
         int numColliders = Physics.OverlapSphereNonAlloc(transform.position, 15f, _hitColliders, TargetLayer);
         Enemy closestEnemy = null;
 
         for (int i = 0; i < numColliders; i++)
         {
-            Collider enemyColl = _hitColliders[i];
+            enemyColl = _hitColliders[i];
             if (enemyColl != null)
             {
                 float distance = Vector3.Distance(transform.position,
                                         enemyColl.ClosestPoint(transform.position));
                 if (distance < targetRange)
                 {
-                    closestEnemy = enemyColl.GetComponent<Enemy>();
+                    closestEnemy = enemyColl.GetComponentInParent<Enemy>();
                 }
             }
         }

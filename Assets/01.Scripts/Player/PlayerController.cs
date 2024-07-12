@@ -8,9 +8,9 @@ public class PlayerController : Entity
     public InputReader InputReader => _inputReader;
 
     public PlayerMove MoveCompo { get; private set; }
-    public PlayerAttack AttackCompo { get; private set; }
     public PlayerAnimator AnimatorCompo { get; private set; }
     public StateMachine PlayerStateMachine { get; private set; }
+    public PlayerAttack PlayerAttackCompo { get => (PlayerAttack)AttackCompo; }
 
     [Header("Player Grounded")]
     public bool Grounded = true;
@@ -37,7 +37,6 @@ public class PlayerController : Entity
         Transform visual = transform.Find("Visual").transform;
 
         MoveCompo = GetComponent<PlayerMove>();
-        AttackCompo = GetComponent<PlayerAttack>();
         AnimatorCompo = visual.GetComponent<PlayerAnimator>();
 
         SetPlayerComponents();
@@ -63,7 +62,7 @@ public class PlayerController : Entity
 
         foreach (var stateComponent in stateComponents)
         {
-            stateComponent.Initialize(PlayerStateMachine, this, AttackCompo);
+            stateComponent.Initialize(PlayerStateMachine, this, PlayerAttackCompo);
             PlayerStateMachine.AddState(stateComponent.StateType, stateComponent);
         }
     }

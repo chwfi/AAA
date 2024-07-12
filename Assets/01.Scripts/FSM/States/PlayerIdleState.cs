@@ -7,7 +7,7 @@ public class PlayerIdleState : PlayerGroundedState
         base.EnterState();
 
         Player.MoveCompo.MoveSpeed = 0;
-        Player.AttackCompo.InitAttackCombo();
+        Player.PlayerAttackCompo.InitAttackCombo();
     }
 
     public override void UpdateState()

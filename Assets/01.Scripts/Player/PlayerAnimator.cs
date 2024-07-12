@@ -68,7 +68,7 @@ public class PlayerAnimator : MonoBehaviour, IPlayerable
 
     public void SetAttackTrigger()
     {
-        Player.AttackCompo.AttackTrigger();
+        Player.PlayerAttackCompo.AttackTrigger();
     }
 
     public void SetDodgeAnimation(bool value)
@@ -108,6 +108,6 @@ public class PlayerAnimator : MonoBehaviour, IPlayerable
 
     public void AttackComboTrigger()
     {
-        Player.AttackCompo.CanAttack = true;
+        Player.PlayerAttackCompo.CanAttack = true;
     }
 }

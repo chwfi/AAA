@@ -22,13 +22,13 @@ public class PlayerGroundedState : PlayerBaseState
 
     private void AttackHandle()
     {
-        if (Player.AttackCompo.CanAttack)
+        if (Player.PlayerAttackCompo.CanAttack)
             _stateMachine.ChangeState(StateTypeEnum.BasicAttack);
     }
 
     private void DodgeHandle()
     {
-        if (Player.AttackCompo.CanAttack)
+        if (Player.PlayerAttackCompo.CanAttack)
             _stateMachine.ChangeState(StateTypeEnum.Dodge);
     }
 

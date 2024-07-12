@@ -14,8 +14,8 @@ public class PlayerBasicAttackState : PlayerGroundedState
 
         Player.MoveCompo.StopImmediately();
         Player.MoveCompo.CanMove = false;
-        Player.AttackCompo.AttackFeedback.ApplyAttackEffect();
-        Player.AttackCompo.AttackFeedback.ApplyAttackSound();
+        Player.FeedbackDictionary.TryGetValue(FeedbackTypeEnum.Attack, out Feedback feedback); 
+        feedback.StartFeedback();
 
         if (_attack.CurrentTarget != null) //타겟이 있다면 더 빠른 대쉬
         {
@@ -29,12 +29,12 @@ public class PlayerBasicAttackState : PlayerGroundedState
                 _dashDelay, _dashTime, _dashSpeed, DashTypeEnum.AttackDash);
         }
 
-        Player.AnimatorCompo.SetAttackCount(Player.AttackCompo.CurrentComboCounter);
+        Player.AnimatorCompo.SetAttackCount(Player.PlayerAttackCompo.CurrentComboCounter);
         Player.AnimatorCompo.SetAttackAnimation(true);
-        Player.AttackCompo.CurrentComboCounter++;
-        Player.AttackCompo.CanAttack = false;
+        Player.PlayerAttackCompo.CurrentComboCounter++;
+        Player.PlayerAttackCompo.CanAttack = false;
 
-        if (Player.AttackCompo.CurrentComboCounter == 2)
+        if (Player.PlayerAttackCompo.CurrentComboCounter == 2)
             _dashDelay = 0.25f;
         else
             _dashDelay = 0.15f;

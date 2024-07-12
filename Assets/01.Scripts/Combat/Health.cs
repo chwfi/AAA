@@ -1,34 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
 {
-    private CombatFeedback _hitFeedback;
+    private Entity _owner;
 
     public int maxHealth;
     public int currentHealth;
-
     public bool IsDead;
+
+    public Vector3 hitPoint;
+    public HitTypeEnum hitType;
 
     private void Awake()
     {
-        Transform feedbackTrm = transform.Find("Feedback").transform;
-        _hitFeedback = feedbackTrm.GetComponent<CombatFeedback>();
-        _hitFeedback.SetOwner(transform.GetComponent<Entity>());
-
         IsDead = false;
         currentHealth = maxHealth; //나중에 SO로 뺄 것
+    }
+
+    public void SetOwner(Entity owner)
+    {
+        _owner = owner;
     }
 
     public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitTypeEnum hitType)
     {
         if (IsDead) return;
-
+         
+        SaveHitData(point, hitType);
         currentHealth -= damage;
-        _hitFeedback.ApplyFeedback(point, hitType);
+        _owner.FeedbackDictionary.TryGetValue(FeedbackTypeEnum.Hit, out Feedback feedback);
+        feedback.StartFeedback();
         TimeManager.Instance.StopTime(0.5f);
 
         Debug.Log("Hit!");
+    }
+
+    public void SaveHitData(Vector3 point, HitTypeEnum type)
+    {
+        hitPoint = point;
+        hitType = type;
     }
 }

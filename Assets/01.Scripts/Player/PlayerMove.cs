@@ -85,7 +85,7 @@ public class PlayerMove : MonoBehaviour, IPlayerable
 
         while (Time.time < startTime + time)
         {
-            if (Player.AttackCompo.IsTargetInStopRange() && dashType == DashTypeEnum.AttackDash)
+            if (Player.PlayerAttackCompo.IsTargetInStopRange() && dashType == DashTypeEnum.AttackDash)
                 StopCoroutine(_dashCoroutine);
 
             float elapsed = Time.time - startTime;
