@@ -25,7 +25,7 @@ public class PlayerMove : MonoBehaviour, IPlayerable
 
     public PlayerController Player { get; set; }
 
-    public void SetPlayer(PlayerController player)
+    public void SetOwner(PlayerController player)
     {
         Player = player;
     }
@@ -85,11 +85,14 @@ public class PlayerMove : MonoBehaviour, IPlayerable
 
         while (Time.time < startTime + time)
         {
-            if (Player.PlayerAttackCompo.IsTargetInStopRange() && dashType == DashTypeEnum.AttackDash)
-                StopCoroutine(_dashCoroutine);
-
             float elapsed = Time.time - startTime;
             float currentSpeed = ease ? speed * OutQuint(elapsed / time) : speed;
+
+            if (Player.PlayerAttackCompo.IsTargetInStopRange() && dashType == DashTypeEnum.AttackDash)
+            {
+                currentSpeed = 0;
+                StopCoroutine(_dashCoroutine);
+            }
 
             CharacterControllerCompo.Move
                 (dir * (currentSpeed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);

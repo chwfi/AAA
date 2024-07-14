@@ -5,7 +5,7 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     public Health HealthCompo { get; private set; }
-    public AttackableEntity AttackCompo { get; private set; }
+    public TargetController AttackCompo { get; private set; }
     public Dictionary<FeedbackTypeEnum, Feedback> FeedbackDictionary { get; private set; }
 
     private Feedback[] feedbacks;
@@ -13,7 +13,7 @@ public class Entity : MonoBehaviour
     protected virtual void Awake()
     {
         HealthCompo = GetComponent<Health>();
-        AttackCompo = GetComponent<AttackableEntity>();
+        AttackCompo = GetComponent<TargetController>();
         HealthCompo.SetOwner(this);
 
         FeedbackDictionary = new();

@@ -27,7 +27,7 @@ public class PlayerAnimator : MonoBehaviour, IPlayerable
         _animator = GetComponent<Animator>();
     }
 
-    public void SetPlayer(PlayerController player)
+    public void SetOwner(PlayerController player)
     {
         Player = player;
     }
@@ -66,11 +66,6 @@ public class PlayerAnimator : MonoBehaviour, IPlayerable
         _animator.SetInteger(_attackCount, value);
     }
 
-    public void SetAttackTrigger()
-    {
-        Player.PlayerAttackCompo.AttackTrigger();
-    }
-
     public void SetDodgeAnimation(bool value)
     {
         _animator.SetBool(_dodgeAnim, value);
@@ -104,6 +99,16 @@ public class PlayerAnimator : MonoBehaviour, IPlayerable
     {
         _animator.SetBool(_attackAnim, false);
         Player.PlayerStateMachine.ChangeState(StateTypeEnum.Idle);
+    }
+
+    public void DamageCastTrigger()
+    {
+        Player.PlayerAttackCompo.AttackTrigger();
+    }
+
+    public void DamageCastEndTrigger()
+    {
+        Player.PlayerAttackCompo.AttackEndTrigger();
     }
 
     public void AttackComboTrigger()

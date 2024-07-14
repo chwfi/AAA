@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class PlayerAttack : AttackableEntity, IPlayerable
+public class PlayerAttack : TargetController, IPlayerable
 {
+    public BoxCollider coll;
     public PlayerController Player { get; set; }
 
     public int CurrentComboCounter = 0;
@@ -12,7 +13,7 @@ public class PlayerAttack : AttackableEntity, IPlayerable
         base.Awake();
     }
 
-    public void SetPlayer(PlayerController player)
+    public void SetOwner(PlayerController player)
     {
         Player = player;
     }
@@ -26,14 +27,16 @@ public class PlayerAttack : AttackableEntity, IPlayerable
     {
         if (CurrentTarget == null) return false;
 
-        if (Vector3.Distance(transform.position, enemyColl.ClosestPoint(transform.position)) < stopRange) return true;
+        if (CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.ClosestPoint(transform.position)) < stopRange) return true;
         else return false;
     }
 
     public void RotateToTarget()
     {
-        Vector3 dir = new Vector3(enemyColl.ClosestPoint(transform.position).x, transform.position.y,
-            enemyColl.ClosestPoint(transform.position).z);
+        if (CurrentTarget == null) return;
+
+        Vector3 dir = new Vector3(CurrentTarget.ClosestPoint(transform.position).x, transform.position.y,
+            CurrentTarget.ClosestPoint(transform.position).z);
         var destRotation = Quaternion.LookRotation(dir - transform.position);
         transform.rotation = destRotation;
     }
@@ -49,6 +52,11 @@ public class PlayerAttack : AttackableEntity, IPlayerable
 
     public override void AttackTrigger()
     {
-        DamageCasterCompo.CastDamage(TargetLayer);
+        coll.enabled = true;
+    }
+
+    public void AttackEndTrigger()
+    {
+        coll.enabled = false;
     }
 }

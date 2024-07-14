@@ -49,7 +49,7 @@ public class PlayerController : Entity
 
         foreach (IPlayerable player in playerCompos)
         {
-            player.SetPlayer(this);
+            player.SetOwner(this);
         }
     }
 

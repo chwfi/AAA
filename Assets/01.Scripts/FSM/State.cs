@@ -6,9 +6,9 @@ public abstract class State : MonoBehaviour
 
     protected StateMachine _stateMachine;
     protected Entity _owner;
-    protected AttackableEntity _attack;
+    protected TargetController _attack;
 
-    public virtual void Initialize(StateMachine stateMachine, Entity owner, AttackableEntity attackController)
+    public virtual void Initialize(StateMachine stateMachine, Entity owner, TargetController attackController)
     {
         _stateMachine = stateMachine;
         _owner = owner;
