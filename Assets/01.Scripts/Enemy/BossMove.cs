@@ -15,13 +15,8 @@ public class BossMove : MonoBehaviour, IBossable
     public float FallTimeout = 0.15f;
 
     private Coroutine _dashCoroutine;
-    private Vector3 targetDirection;
-    private float _targetRotation = 0.0f;
-    private float _rotationVelocity;
     private float _verticalVelocity;
     public float VerticalVelocity => _verticalVelocity;
-
-    public bool CanMove = true;
 
     public CharacterController CharacterControllerCompo { get; private set; }
     public BossController Boss { get; set; }
@@ -39,7 +34,6 @@ public class BossMove : MonoBehaviour, IBossable
     public void Update()
     {
         SetGravity();
-        
     }
 
     public void SetGravity()
@@ -48,23 +42,6 @@ public class BossMove : MonoBehaviour, IBossable
 
         Vector3 moveVector = new Vector3(0.0f, _verticalVelocity, 0.0f);
         CharacterControllerCompo.Move(moveVector * Time.deltaTime);
-    }
-
-    public void Move()
-    {
-        if (!CanMove) return;                      
-
-        Boss.AnimatorCompo.SetMoveAnimation(MoveSpeed, SpeedChangeRate);
-
-        float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
-            RotationSmoothTime);
-
-        transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-
-        targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-
-        CharacterControllerCompo.Move(targetDirection.normalized * (MoveSpeed * Time.deltaTime) +
-                         new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
     }
 
     public void Dash(Vector3 dir, float delay, float time, float speed, DashTypeEnum dashType, bool ease = false)
@@ -81,14 +58,12 @@ public class BossMove : MonoBehaviour, IBossable
             StopCoroutine(_dashCoroutine);
 
         _dashCoroutine = StartCoroutine(JumpDashCoroutine(dir, delay, time, speed, jumpForce, multfyForce));
-        Debug.Log("스타트 대쉬");
     }
 
     private IEnumerator JumpDashCoroutine(Vector3 dir, float delay, float time, float speed, float jumpForce, float multfyForce)
     {
         yield return new WaitForSeconds(delay);
 
-        //점프 초기 속도
         _verticalVelocity = jumpForce;
 
         float startTime = Time.time;
@@ -121,12 +96,6 @@ public class BossMove : MonoBehaviour, IBossable
         {
             float elapsed = Time.time - startTime;
             float currentSpeed = ease ? speed * OutQuint(elapsed / time) : speed;
-
-            //if (Boss.BossAttackCompo.IsTargetInStopRange() && dashType == DashTypeEnum.AttackDash)
-            //{
-            //    currentSpeed = 0;
-            //    StopCoroutine(_dashCoroutine);
-            //}
 
             CharacterControllerCompo.Move
                 (dir * (currentSpeed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);

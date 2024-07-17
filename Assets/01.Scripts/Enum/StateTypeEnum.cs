@@ -6,4 +6,5 @@ public enum StateTypeEnum
     Dodge,
     BasicAttack,
     JumpAttack,
+    MissileAttack,
 }

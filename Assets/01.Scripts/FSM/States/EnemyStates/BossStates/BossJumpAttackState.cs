@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BossJumpAttackState : BossBaseState
+public class BossJumpAttackState : BossGroundedState
 {
     [SerializeField] private float _dashDelay;
     [SerializeField] private float _dashTime;

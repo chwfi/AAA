@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBasicAttackState : BossBaseState
+public class BossBasicAttackState : BossGroundedState
 {
     [SerializeField] private float _dashDelay;
     [SerializeField] private float _dashTime;

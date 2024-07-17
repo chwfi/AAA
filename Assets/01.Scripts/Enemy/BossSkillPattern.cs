@@ -5,6 +5,7 @@ public enum BossAttackType
 {
     BasicAttack,
     JumpAttack,
+    MissileAttack,
 }
 
 public class BossSkillPattern : MonoBehaviour, IBossable
@@ -12,9 +13,11 @@ public class BossSkillPattern : MonoBehaviour, IBossable
     [Header("Condition Value")]
     [SerializeField] private float _jumpAttackDistance;
     [SerializeField] private float _meleeAttackDistance;
+    [SerializeField] private float _missileAttackDistance;
 
     public bool CanBasicAttack;
     public bool CanJumpAttack;
+    public bool CanMissileAttack;
 
     public BossController Boss { get; set; }
 
@@ -26,22 +29,29 @@ public class BossSkillPattern : MonoBehaviour, IBossable
         Boss = boss;
         CanBasicAttack = true;
         CanJumpAttack = true;
+        CanMissileAttack = false;
     }
 
     private void Update()
     {
         if (Boss.AttackCompo.CurrentTarget == null) return;
 
-        if (Vector3.Distance(TargetPos, transform.position) > _jumpAttackDistance && CanJumpAttack && CanBasicAttack)
+        if (Vector3.Distance(TargetPos, transform.position) > _jumpAttackDistance && CanJumpAttack && CanBasicAttack && !CanMissileAttack)
         {
             Boss.BossStateMachine.ChangeState(StateTypeEnum.JumpAttack);
             CanJumpAttack = false;  
         }
 
-        if (Vector3.Distance(TargetPos, transform.position) < _meleeAttackDistance && CanBasicAttack && CanJumpAttack)
+        if (Vector3.Distance(TargetPos, transform.position) < _meleeAttackDistance && CanBasicAttack && CanJumpAttack && !CanMissileAttack)
         {
             Boss.BossStateMachine.ChangeState(StateTypeEnum.BasicAttack);
             CanBasicAttack = false;
+        }
+
+        if (Vector3.Distance(TargetPos, transform.position) < _missileAttackDistance && CanMissileAttack && CanBasicAttack && CanJumpAttack)
+        {
+            Boss.BossStateMachine.ChangeState(StateTypeEnum.MissileAttack);
+            CanMissileAttack = false;
         }
     }
 

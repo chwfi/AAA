@@ -12,6 +12,8 @@ public class BossAnimator : MonoBehaviour, IBossable
     private readonly int _attackAnim = Animator.StringToHash("Attack");
     private readonly int _attackTrigger = Animator.StringToHash("AttackTrigger");
     private readonly int _jumpAttackAnim = Animator.StringToHash("JumpAttack");
+    private readonly int _missileAttackAnim = Animator.StringToHash("MissileAttack");
+    private readonly int _initAnim = Animator.StringToHash("Init");
     private float _animationBlend;
 
     public BossController Boss { get; set; }
@@ -26,9 +28,9 @@ public class BossAnimator : MonoBehaviour, IBossable
         _animator = GetComponent<Animator>();
     }
 
-    public void SetRootMotion(bool value)
+    public void InitAnimation()
     {
-        _animator.applyRootMotion = value;
+        _animator.SetTrigger(_initAnim);
     }
 
     public void SetMoveAnimation(float targetSpeed, float SpeedChangeRate)
@@ -53,6 +55,16 @@ public class BossAnimator : MonoBehaviour, IBossable
     public void SetBasicAttackAnimation(bool value)
     {
         _animator.SetBool(_attackAnim, value);
+    }
+
+    public void SetMissileAttackAnimation(bool value)
+    {
+        _animator.SetBool(_missileAttackAnim, value);
+    }
+
+    public void AnimationEndTrigger()
+    {
+        Boss.BossStateMachine.ChangeState(StateTypeEnum.Idle);
     }
 
     public void BasicAttackEndTrigger()

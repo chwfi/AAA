@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class BossIdleState : BossBaseState
+public class BossIdleState : BossGroundedState
 {
     public override void EnterState()
     {
         base.EnterState();
 
+        Boss.AnimatorCompo.InitAnimation();
         Boss.MoveCompo.MoveSpeed = 0;
     }
 

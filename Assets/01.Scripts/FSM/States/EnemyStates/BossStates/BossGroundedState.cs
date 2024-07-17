@@ -13,7 +13,7 @@ public class BossGroundedState : BossBaseState
     {
         base.UpdateState();
 
-        Boss.MoveCompo.Move();
+        Boss.BossAttackCompo.RotateToPlayer();
     }
 
     public override void ExitState()
