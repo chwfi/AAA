@@ -26,7 +26,7 @@ public class TargetController : MonoBehaviour
 
     public void Targeting()
     {
-        int numColliders = Physics.OverlapSphereNonAlloc(transform.position, 15f, _hitColliders, TargetLayer);
+        int numColliders = Physics.OverlapSphereNonAlloc(transform.position, targetRange, _hitColliders, TargetLayer);
 
         Collider closestEnemyColl = null;
         float closestDistance = float.MaxValue;
@@ -44,6 +44,15 @@ public class TargetController : MonoBehaviour
         CurrentTarget = closestEnemyColl;
     }
 
+    public void RotateToTarget()
+    {
+        if (CurrentTarget == null) return;
+
+        Vector3 dir = new(CurrentTarget.ClosestPoint(transform.position).x, transform.position.y,
+            CurrentTarget.ClosestPoint(transform.position).z);
+        var destRotation = Quaternion.LookRotation(dir - transform.position);
+        transform.rotation = destRotation;
+    }
 
     public virtual void AttackTrigger()
     {

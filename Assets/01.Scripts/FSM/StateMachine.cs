@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class StateMachine
 {
@@ -21,6 +22,15 @@ public class StateMachine
         CurrentState.ExitState();
         CurrentState = StateDictionary[newState];
         CurrentState.EnterState();
+    }
+
+    public void WaitForChangeState(StateTypeEnum newState, Animator animator, float value)
+    {
+        float time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        if (time >= value)
+        {
+            ChangeState(newState);
+        }
     }
 
     public void AddState(StateTypeEnum stateType, State state)

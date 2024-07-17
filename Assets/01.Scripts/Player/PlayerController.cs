@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-using System.Collections;
 using UnityEngine;
 
 public class PlayerController : Entity

@@ -5,4 +5,5 @@ public enum StateTypeEnum
     Grounded,
     Dodge,
     BasicAttack,
+    JumpAttack,
 }

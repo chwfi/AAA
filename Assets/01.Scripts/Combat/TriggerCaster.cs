@@ -5,6 +5,12 @@ using UnityEngine;
 public class TriggerCaster : MonoBehaviour
 {
     public LayerMask TargetLayer;
+    private Collider _collider;
+
+    private void Awake()
+    {
+        _collider = GetComponent<Collider>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,5 +22,10 @@ public class TriggerCaster : MonoBehaviour
 
             health.ApplyDamage(damage, collisionPoint, Vector3.zero, HitTypeEnum.Spark);
         }
+    }
+
+    public void SetTrigger(bool value)
+    {
+        _collider.enabled = value;
     }
 }

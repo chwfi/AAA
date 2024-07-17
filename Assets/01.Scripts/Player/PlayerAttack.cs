@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAttack : TargetController, IPlayerable
 {
-    public BoxCollider coll;
+    public TriggerCaster TriggerCompo { get; private set; }
     public PlayerController Player { get; set; }
 
     public int CurrentComboCounter = 0;
@@ -11,6 +11,8 @@ public class PlayerAttack : TargetController, IPlayerable
     protected override void Awake()
     {
         base.Awake();
+
+        TriggerCompo = GetComponentInChildren<TriggerCaster>();
     }
 
     public void SetOwner(PlayerController player)
@@ -31,16 +33,6 @@ public class PlayerAttack : TargetController, IPlayerable
         else return false;
     }
 
-    public void RotateToTarget()
-    {
-        if (CurrentTarget == null) return;
-
-        Vector3 dir = new Vector3(CurrentTarget.ClosestPoint(transform.position).x, transform.position.y,
-            CurrentTarget.ClosestPoint(transform.position).z);
-        var destRotation = Quaternion.LookRotation(dir - transform.position);
-        transform.rotation = destRotation;
-    }
-
     public void InitAttackCombo()
     {
         Player.MoveCompo.CanMove = true;
@@ -52,11 +44,11 @@ public class PlayerAttack : TargetController, IPlayerable
 
     public override void AttackTrigger()
     {
-        coll.enabled = true;
+        TriggerCompo.SetTrigger(true);
     }
 
     public void AttackEndTrigger()
     {
-        coll.enabled = false;
+        TriggerCompo.SetTrigger(false);
     }
 }

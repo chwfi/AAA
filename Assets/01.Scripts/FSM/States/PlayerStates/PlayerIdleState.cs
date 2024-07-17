@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class PlayerIdleState : PlayerGroundedState
 {
     public override void EnterState()

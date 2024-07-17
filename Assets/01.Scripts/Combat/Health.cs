@@ -8,8 +8,8 @@ public class Health : MonoBehaviour, IDamageable
     public int currentHealth;
     public bool IsDead;
 
-    public Vector3 hitPoint;
-    public HitTypeEnum hitType;
+    [HideInInspector] public Vector3 hitPoint;
+    [HideInInspector] public HitTypeEnum hitType;
 
     private void Awake()
     {
