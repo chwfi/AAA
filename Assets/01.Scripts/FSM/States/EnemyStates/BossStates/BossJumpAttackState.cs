@@ -13,6 +13,7 @@ public class BossJumpAttackState : BossGroundedState
     {
         base.EnterState();
 
+        Boss.BossSkillController.IsPlayingSkill = true;
         Boss.BossAttackCompo.RotateToTarget();
         Boss.MoveCompo.JumpDash
             (Boss.AnimatorCompo.transform.forward,
@@ -29,6 +30,6 @@ public class BossJumpAttackState : BossGroundedState
     {
         Boss.BossAttackCompo.RotateToTarget();
         base.ExitState();
-        Boss.SkillPatternCompo.SetCoolDownHandler(_coolDown, BossAttackType.JumpAttack);
+        Boss.BossSkillController.IsPlayingSkill = false;
     }
 }

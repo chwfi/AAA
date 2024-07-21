@@ -4,6 +4,7 @@ public enum FeedbackTypeEnum
 {
     Hit,
     Attack, 
+    Effect,
 }
 
 public class Feedback : MonoBehaviour

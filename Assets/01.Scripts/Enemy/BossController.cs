@@ -5,7 +5,7 @@ public class BossController : Entity
     public BossMove MoveCompo { get; private set; }
     public BossAnimator AnimatorCompo { get; private set; }
     public CharacterController CharacterControllerCompo { get; private set; }
-    public BossSkillPattern SkillPatternCompo { get; private set; }
+    public BossSkillController BossSkillController { get; private set; }
     public StateMachine BossStateMachine { get; private set; }
     public BossAttack BossAttackCompo { get => (BossAttack)AttackCompo; }
 
@@ -17,7 +17,7 @@ public class BossController : Entity
 
         MoveCompo = GetComponent<BossMove>();
         CharacterControllerCompo = GetComponent<CharacterController>();
-        SkillPatternCompo = GetComponent<BossSkillPattern>();
+        BossSkillController = GetComponent<BossSkillController>();
         AnimatorCompo = visual.GetComponent<BossAnimator>();
 
         SetEnemyComponents();

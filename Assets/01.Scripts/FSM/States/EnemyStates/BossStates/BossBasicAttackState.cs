@@ -9,13 +9,11 @@ public class BossBasicAttackState : BossGroundedState
     [SerializeField] private float _dashSpeed;
     [SerializeField] private float _cooldown;
 
-    private int _count = 0;
-
     public override void EnterState()
     {
         base.EnterState();
 
-        _count++;
+        Boss.BossSkillController.IsPlayingSkill = true;
         Boss.AnimatorCompo.SetAttackTrigger();
         Boss.AttackCompo.RotateToTarget();
         Boss.MoveCompo.Dash(transform.forward, _dashDelay, _dashTime, _dashSpeed, DashTypeEnum.AttackDash);
@@ -30,11 +28,6 @@ public class BossBasicAttackState : BossGroundedState
     public override void ExitState()
     {
         base.ExitState();
-
-        if (_count > 1)
-        {
-            Boss.SkillPatternCompo.SetCoolDownHandler(_cooldown, BossAttackType.BasicAttack);
-            _count = 0;
-        }
+        Boss.BossSkillController.IsPlayingSkill = false;
     }
 }
