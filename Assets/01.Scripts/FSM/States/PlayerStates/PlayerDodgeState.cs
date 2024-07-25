@@ -14,9 +14,18 @@ public class PlayerDodgeState : PlayerBaseState
 
         Player.MoveCompo.StopImmediately();
 
-        Player.MoveCompo.Dash(Player.AnimatorCompo.transform.forward,
+        if (Player.InputReader.MoveInput.y == -1 && !Player.PlayerAttackCompo.CanAttack)
+        {
+            Player.MoveCompo.Dash(-Player.AnimatorCompo.transform.forward,
+                _dodgeDelay, _dodgeTime, _dodgeSpeed - 0.1f, DashTypeEnum.DodgeDash, true);
+            Player.AnimatorCompo.SetDodgeBackAnimation(true);
+        }
+        else
+        {
+            Player.MoveCompo.Dash(Player.AnimatorCompo.transform.forward,
                 _dodgeDelay, _dodgeTime, _dodgeSpeed, DashTypeEnum.DodgeDash, true);
-        Player.AnimatorCompo.SetDodgeAnimation(true);
+            Player.AnimatorCompo.SetDodgeAnimation(true);
+        }     
     }
 
     public override void UpdateState()

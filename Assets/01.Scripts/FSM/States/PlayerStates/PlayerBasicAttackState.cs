@@ -34,10 +34,10 @@ public class PlayerBasicAttackState : PlayerGroundedState
         Player.PlayerAttackCompo.CurrentComboCounter++;
         Player.PlayerAttackCompo.CanAttack = false;
 
-        if (Player.PlayerAttackCompo.CurrentComboCounter == 2)
-            _dashDelay = 0.25f;
-        else
-            _dashDelay = 0.15f;
+        //if (Player.PlayerAttackCompo.CurrentComboCounter == 2)
+        //    _dashDelay = 0.25f;
+        //else
+        //    _dashDelay = 0.15f;
     }
 
     public override void UpdateState()
