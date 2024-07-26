@@ -4,6 +4,7 @@ public enum StateTypeEnum
     Move,
     Grounded,
     Dodge,
+    Parrying,
     BasicAttack,
     JumpAttack,
     MissileAttack,

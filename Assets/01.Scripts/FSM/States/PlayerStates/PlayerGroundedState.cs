@@ -10,6 +10,7 @@ public class PlayerGroundedState : PlayerBaseState
 
         Player.InputReader.BasicAttackEvent += AttackHandle;
         Player.InputReader.DodgeEvent += DodgeHandle;
+        Player.InputReader.ParryingEvent += ParryingHandle;
     }
 
     public override void ExitState()
@@ -18,6 +19,7 @@ public class PlayerGroundedState : PlayerBaseState
 
         Player.InputReader.BasicAttackEvent -= AttackHandle;
         Player.InputReader.DodgeEvent -= DodgeHandle;
+        Player.InputReader.ParryingEvent -= ParryingHandle;
     }
 
     private void AttackHandle()
@@ -31,6 +33,11 @@ public class PlayerGroundedState : PlayerBaseState
     {
         if (Player.PlayerAttackCompo.CanAttack)
             _stateMachine.ChangeState(StateTypeEnum.Dodge);
+    }
+
+    private void ParryingHandle()
+    {
+        _stateMachine.ChangeState(StateTypeEnum.Parrying);
     }
 
     public override void UpdateState()

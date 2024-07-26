@@ -11,6 +11,7 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
 
     public event Action BasicAttackEvent;
     public event Action DodgeEvent;
+    public event Action ParryingEvent;
 
     public void OnAttack(InputAction.CallbackContext context)
     {
@@ -32,6 +33,12 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     public void OnMove(InputAction.CallbackContext context)
     {
         MoveInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnParrying(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            ParryingEvent?.Invoke();
     }
 
     public void OnSprint(InputAction.CallbackContext context)

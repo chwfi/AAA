@@ -12,6 +12,7 @@ public class PlayerAnimator : MonoBehaviour, IPlayerable
     private readonly int _groundedAnim = Animator.StringToHash("Grounded");
     private readonly int _attackAnim = Animator.StringToHash("Attack");
     private readonly int _attackCount = Animator.StringToHash("Attack_Count");
+    private readonly int _parryingAnim = Animator.StringToHash("Parrying");
     private readonly int _dodgeAnim = Animator.StringToHash("Dodge");
     private readonly int _dodgeLeftAnim = Animator.StringToHash("Dodge_L");
     private readonly int _dodgeRightAnim = Animator.StringToHash("Dodge_R");
@@ -66,6 +67,11 @@ public class PlayerAnimator : MonoBehaviour, IPlayerable
         _animator.SetInteger(_attackCount, value);
     }
 
+    public void SetParryingAnimation(bool value)
+    {
+        _animator.SetBool(_parryingAnim, value);
+    }
+
     public void SetDodgeAnimation(bool value)
     {
         _animator.SetBool(_dodgeAnim, value);
@@ -114,5 +120,10 @@ public class PlayerAnimator : MonoBehaviour, IPlayerable
     public void AttackComboTrigger()
     {
         Player.PlayerAttackCompo.CanAttack = true;
+    }
+
+    public void AnimationEndTrigger()
+    {
+        Player.PlayerStateMachine.ChangeState(StateTypeEnum.Idle);
     }
 }
