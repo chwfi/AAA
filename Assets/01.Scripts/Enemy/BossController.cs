@@ -15,13 +15,13 @@ public class BossController : Entity
 
         Transform visual = transform.Find("Visual").transform;
 
-        MoveCompo = GetComponent<BossMove>();
-        CharacterControllerCompo = GetComponent<CharacterController>();
-        BossSkillController = GetComponent<BossSkillController>();
+        //MoveCompo = GetComponent<BossMove>();
+        //CharacterControllerCompo = GetComponent<CharacterController>();
+        //BossSkillController = GetComponent<BossSkillController>();
         AnimatorCompo = visual.GetComponent<BossAnimator>();
 
-        SetEnemyComponents();
-        SetStates();
+        //SetEnemyComponents();
+        //SetStates();
     }
 
     private void SetEnemyComponents()
@@ -50,11 +50,11 @@ public class BossController : Entity
 
     private void Start()
     {
-        BossStateMachine.Init(StateTypeEnum.Idle);
+        //BossStateMachine.Init(StateTypeEnum.Idle);
     }
 
     private void Update()
     {
-        BossStateMachine.CurrentState.UpdateState();
+        //BossStateMachine.CurrentState.UpdateState();
     }
 }

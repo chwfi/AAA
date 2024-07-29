@@ -8,18 +8,18 @@ public class PlayerGroundedState : PlayerBaseState
     {
         base.EnterState();
 
+        Player.InputReader.ParryingEvent += ParryingHandle;
         Player.InputReader.BasicAttackEvent += AttackHandle;
         Player.InputReader.DodgeEvent += DodgeHandle;
-        Player.InputReader.ParryingEvent += ParryingHandle;
     }
 
     public override void ExitState()
     {
         base.ExitState();
 
+        Player.InputReader.ParryingEvent -= ParryingHandle;
         Player.InputReader.BasicAttackEvent -= AttackHandle;
         Player.InputReader.DodgeEvent -= DodgeHandle;
-        Player.InputReader.ParryingEvent -= ParryingHandle;
     }
 
     private void AttackHandle()

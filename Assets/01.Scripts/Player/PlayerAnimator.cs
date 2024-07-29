@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerAnimator : MonoBehaviour, IPlayerable
 {
@@ -101,12 +102,6 @@ public class PlayerAnimator : MonoBehaviour, IPlayerable
         Player.PlayerStateMachine.ChangeState(StateTypeEnum.Idle);
     }
 
-    public void AttackEndTrigger()
-    {
-        _animator.SetBool(_attackAnim, false);
-        Player.PlayerStateMachine.ChangeState(StateTypeEnum.Idle);
-    }
-
     public void DamageCastTrigger()
     {
         Player.PlayerAttackCompo.AttackTrigger();
@@ -125,5 +120,10 @@ public class PlayerAnimator : MonoBehaviour, IPlayerable
     public void AnimationEndTrigger()
     {
         Player.PlayerStateMachine.ChangeState(StateTypeEnum.Idle);
+    }
+
+    public void AttackAnimationEndTrigger()
+    {
+        _animator.SetBool(_attackAnim, false);
     }
 }
