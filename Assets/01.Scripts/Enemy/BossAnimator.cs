@@ -7,8 +7,7 @@ public class BossAnimator : MonoBehaviour, IBossable
     private Animator _animator;
     public Animator AnimatorCompo => _animator;
 
-    private readonly int _speedAnim = Animator.StringToHash("Speed");
-    private readonly int _motionSpeedAnim = Animator.StringToHash("MotionSpeed");
+    private readonly int _walkAnim = Animator.StringToHash("Walk");
     private readonly int _attackAnim = Animator.StringToHash("Attack");
     private readonly int _attackTrigger = Animator.StringToHash("AttackTrigger");
     private readonly int _jumpAttackAnim = Animator.StringToHash("JumpAttack");
@@ -33,13 +32,9 @@ public class BossAnimator : MonoBehaviour, IBossable
         _animator.SetTrigger(_initAnim);
     }
 
-    public void SetMoveAnimation(float targetSpeed, float SpeedChangeRate)
+    public void SetWalkAnimation(bool value)
     {
-        _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
-        if (_animationBlend < 0.01f) _animationBlend = 0f;
-
-        _animator.SetFloat(_speedAnim, _animationBlend);
-        _animator.SetFloat(_motionSpeedAnim, 1);
+        _animator.SetBool(_walkAnim, value);
     }
 
     public void SetJumpAttackAnimation(bool value)

@@ -44,6 +44,12 @@ public class TargetController : MonoBehaviour
         CurrentTarget = closestEnemyColl;
     }
 
+    public bool IsTargetInRange(float range)
+    {
+        if (CurrentTarget == null) return false;
+        else return Vector3.Distance(transform.position, CurrentTarget.transform.position) <= range;
+    }
+
     public void RotateToTarget()
     {
         if (CurrentTarget == null) return;

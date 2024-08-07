@@ -28,6 +28,7 @@ public class BossBasicAttackState : BossGroundedState
     public override void ExitState()
     {
         base.ExitState();
+        Boss.AnimatorCompo.InitAnimation();
         Boss.BossSkillController.IsPlayingSkill = false;
     }
 }

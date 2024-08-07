@@ -22,18 +22,18 @@ public class BossSkillController : MonoBehaviour, IBossable
     {
         Boss = boss;
 
-        SkillManager = new BossSkillManager();
-        SkillManager.SkillList.Add(new BasicAttackSkill(Boss, transform, this, _meleeAttackDistance, _meleeAttackCooldown));
-        SkillManager.SkillList.Add(new JumpAttackSkill(Boss, transform, this, _jumpAttackDistance, _jumpAttackCooldown));
-        SkillManager.SkillList.Add(new MissileAttackSkill(Boss, transform, this, _missileAttackDistance, _missileAttackCooldown));
+        //SkillManager = new BossSkillManager();
+        //SkillManager.SkillList.Add(new BasicAttackSkill(Boss, transform, this, _meleeAttackDistance, _meleeAttackCooldown));
+        //SkillManager.SkillList.Add(new JumpAttackSkill(Boss, transform, this, _jumpAttackDistance, _jumpAttackCooldown));
+        //SkillManager.SkillList.Add(new MissileAttackSkill(Boss, transform, this, _missileAttackDistance, _missileAttackCooldown));
 
-        SkillManager.SetSkills();
+        //SkillManager.SetSkills();
     }
 
     private void Update()
     {
         if (Boss.AttackCompo.CurrentTarget == null) return;
 
-        SkillManager.Update();
+        //SkillManager.Update();
     }
 }

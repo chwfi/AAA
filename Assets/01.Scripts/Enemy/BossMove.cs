@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossMove : MonoBehaviour, IBossable
@@ -42,6 +43,17 @@ public class BossMove : MonoBehaviour, IBossable
 
         Vector3 moveVector = new Vector3(0.0f, _verticalVelocity, 0.0f);
         CharacterControllerCompo.Move(moveVector * Time.deltaTime);
+    }
+
+    public void Move()
+    {
+        Boss.BossAttackCompo.RotateToPlayer();
+
+        Vector3 direction = Boss.BossAttackCompo.CurrentTarget.transform.position - transform.position;
+        direction.Normalize();
+        Vector3 move = MoveSpeed * Time.deltaTime * direction;
+
+        CharacterControllerCompo.Move(move);
     }
 
     public void Dash(Vector3 dir, float delay, float time, float speed, DashTypeEnum dashType, bool ease = false)

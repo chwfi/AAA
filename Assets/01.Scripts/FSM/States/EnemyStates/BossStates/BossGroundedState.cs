@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BossGroundedState : BossBaseState
 {
+    [SerializeField] protected float _chaseRange;
+
     public override void EnterState()
     {
         base.EnterState();
@@ -12,8 +14,6 @@ public class BossGroundedState : BossBaseState
     public override void UpdateState()
     {
         base.UpdateState();
-
-        Boss.BossAttackCompo.RotateToPlayer();
     }
 
     public override void ExitState()

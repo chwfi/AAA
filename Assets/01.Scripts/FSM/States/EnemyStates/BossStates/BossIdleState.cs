@@ -6,13 +6,17 @@ public class BossIdleState : BossGroundedState
     {
         base.EnterState();
 
-        Boss.AnimatorCompo.InitAnimation();
         Boss.MoveCompo.MoveSpeed = 0;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
+        if (Boss.BossAttackCompo.IsTargetInRange(_chaseRange))
+        {
+            _stateMachine.ChangeState(StateTypeEnum.Move);
+        }
     }
 
     public override void ExitState()
